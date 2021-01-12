@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Practica para creación de elementos</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<header>
+		<h1>Vamos a crear una lista de elementos</h1>
+	</header>
+	<main>
+		<h2>Lista de cosas por hacer</h2>
+		<div class="container" id="container">
+			<button id="btn-add" class="btn-add">Agregar cosa por hacer</button>
+		</div>
+
+
+		<form class="modal-fill-data hidden" id="modal-fill-data">
+			<h2>Agregar una nueva tarea</h2>
+			<input type="text" id="input-description" class="input-description" name="description" placeholder="Tarea a realizar">
+			<p>Priority   
+				<select class="priority" id="priority">
+					<option value="Low">Low</option>
+					<option value="Normal">Normal</option>
+					<option value="Hight">Hight</option>
+					<option value="Super">You've better have already done it</option>
+				</select>
+			</p>
+			<p>Reminder  <input type="date" id="reminder" class="reminder"></p>
+			<p>Status  
+				<select class="status" id="status">
+					<option value="New">New</option>
+					<option value="In progress">In progress</option>
+					<option value="Done">Done</option>
+					<option value="Waiting for confirmation">Waiting for confirmation</option>
+				</select>
+			</p>
+			<input type="submit" id="submit" class="submit">
+		</form>
+
+
+		
+	</main>
+	<footer></footer>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
