@@ -3,10 +3,12 @@ const modal = document.querySelector(".modal-fill-data");
 const btnAdd = document.querySelector(".submit");
 const form = document.querySelector(".modal-fill-data");
 const deteleBtn = document.querySelector(".delete-task");
-renderData();
-deteleBtn.addEventListener('click', ()=>{
-	deleteTask();
-});
+if (localStorage.getItem('tasks') !== null) {
+	renderData();
+}
+
+
+
 btnModal.addEventListener("click", ()=>{
 	modal.classList.remove("hidden");
 	today();
@@ -92,25 +94,40 @@ function renderData(){
 	const tasks = JSON.parse(localStorage.getItem('tasks'));
 	tasks.forEach(task => {
 		const row = `<tr>
-			<td>${task.description}</td>
-			<td>${task.priority}</td>
-			<td>${task.status}</td>
-			<td>${task.reminder}</td>
-			<td><input type="checkbox" class="checkbox" id="checkbox"></td>
+			<td class="td">${task.description}</td>
+			<td class="td">${task.priority}</td>
+			<td class="td">${task.status}</td>
+			<td class="td">${task.reminder}</td>
+			<td class="td"><input type="checkbox" class="checkbox" id="checkbox"></td>
 
 		</tr>`
 		document.querySelector(".body-table").insertAdjacentHTML('beforeend', row);
 	});
 }
 
-function deleteTask(){
-	let tasks = document.querySelectorAll(".checkbox");
-	console.log(tasks);
+
+
+const table = document.querySelector("#table");
+
+	table.addEventListener('click', (e)=>{
+		const action = e.target;
+	  	const taskName = action.parentElement.parentElement.firstElementChild.textContent;
+  		localStorage.removeItem(taskName);
+  		console.log(taskName);
+  		//deleteTask(taskName);
+	});
+deteleBtn.addEventListener('click', ()=>{
+	deleteTask();
+});
+function deleteTask(taskName){
+	const tasks = JSON.parse(localStorage.getItem('tasks'));
 	tasks.forEach(task =>{
-		const array = [];
-		if (tasks == "checked") {
-			array.push(task);
-			console.log(array);
+		console.log(task.description);
+		if (task.description === taskName) {
+			localStorage.removeItem(taskName);
 		}
 	});
+	console.log("programa terminado");
 }
+	
+

@@ -5,3 +5,40 @@
 .hidden{
 	display: none;
 }
+.main-tittle{
+	text-align: center;
+}
+.subtittle{
+	padding: 10px;
+}
+.buttons{
+	padding:0 10px;
+}
+.buttons button{
+	width: 75px;
+	height: 25px;
+	box-shadow: 5px 2px 7px #000;
+	margin:5px 10px 0px 0;
+	cursor: pointer;
+}
+
+
+
+.table{
+	text-align: center;
+	margin:5px 10px;
+	border-collapse: 2px solid #000;
+}
+.th{
+	width: 250px;
+	background: #aaa;
+	margin: 5px auto;
+	max-width: 350px;
+}
+.td{
+	width: 400px;
+	max-height: 150px;
+	background: #eee;
+	margin: 5px auto;
+	color:lightblue;
+}
