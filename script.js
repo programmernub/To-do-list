@@ -2,27 +2,34 @@ const btnModal = document.querySelector(".btn-add");
 const modal = document.querySelector(".modal-fill-data");
 const btnAdd = document.querySelector(".submit");
 const form = document.querySelector(".modal-fill-data");
+const deteleBtn = document.querySelector(".delete-task");
+renderData();
+deteleBtn.addEventListener('click', ()=>{
+	deleteTask();
+});
 btnModal.addEventListener("click", ()=>{
 	modal.classList.remove("hidden");
-	//addItem();
 	today();
 	validationDate();
 })
 btnAdd.addEventListener('click', (e)=>{
 	e.preventDefault();
 	addItem();
-	
 	form.reset();
+	modal.classList.add("hidden");
 })
 function addItem(){
 	const container = document.querySelector(".container");
 	const priority = document.querySelector(".priority").value;
 	let reminder = document.querySelector(".reminder").value;
 	const status = document.querySelector(".status").value;
-	const post = document.createElement("LI");
-	const text = document.createTextNode(`Task: ${document.querySelector(".input-description").value} --- Priority: ${priority} --- Remind me on: ${reminder} --- Task Status: ${status}`);
-	post.appendChild(text);
-	container.appendChild(post);
+	const task = {
+		description:  document.querySelector(".input-description").value,
+		priority,
+		reminder,
+		status
+	}
+	saveData(task);
 }
 function today(){
 	const date = new Date();
@@ -50,26 +57,60 @@ function validationDate(){
 			reminder.value = today();
 		}else{
 			count++;
-			console.log("De año vamos bien");
 		}
 		if (day < dayToday && yearToday > 2020){
 			reminder.value = today();
 		}else{
 			count++;
-			console.log("De día vamos bien");
 		}
 		if (month < monthToday && yearToday > 2020) {
 			reminder.value = today();
 		}else{
 			count++;
-			console.log("De mes vamos bien");
 		}
 		if (count < 3 ) {
-			console.log(count);
 			alert("Ingrese una fecha válida");
-		}else{
-			alert("Todo bien, todo correcto");
 		}
 	});
 }
 //Hacer funcion para guardar el item en el LS
+function saveData(text){
+	let tasks;
+	if (localStorage.getItem('tasks') === null) {
+		tasks = [];
+	}else{
+		tasks = JSON.parse(localStorage.getItem('tasks'))
+	}
+	tasks.push(text);
+	localStorage.setItem('tasks', JSON.stringify(tasks));
+	renderData();
+}
+
+function renderData(){
+	const tableBody = document.querySelector(".body-table");
+	tableBody.innerHTML = "";
+	const tasks = JSON.parse(localStorage.getItem('tasks'));
+	tasks.forEach(task => {
+		const row = `<tr>
+			<td>${task.description}</td>
+			<td>${task.priority}</td>
+			<td>${task.status}</td>
+			<td>${task.reminder}</td>
+			<td><input type="checkbox" class="checkbox" id="checkbox"></td>
+
+		</tr>`
+		document.querySelector(".body-table").insertAdjacentHTML('beforeend', row);
+	});
+}
+
+function deleteTask(){
+	let tasks = document.querySelectorAll(".checkbox");
+	console.log(tasks);
+	tasks.forEach(task =>{
+		const array = [];
+		if (tasks == "checked") {
+			array.push(task);
+			console.log(array);
+		}
+	});
+}
