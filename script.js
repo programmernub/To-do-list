@@ -32,6 +32,7 @@ function addItem(){
 		status
 	}
 	saveData(task);
+	renderData();
 }
 function today(){
 	const date = new Date();
@@ -85,9 +86,7 @@ function saveData(text){
 	}
 	tasks.push(text);
 	localStorage.setItem('tasks', JSON.stringify(tasks));
-	renderData();
 }
-
 function renderData(){
 	const tableBody = document.querySelector(".body-table");
 	tableBody.innerHTML = "";
@@ -98,12 +97,11 @@ function renderData(){
 			<td class="td">${task.priority}</td>
 			<td class="td">${task.status}</td>
 			<td class="td">${task.reminder}</td>
-			<td class="td"><input type="checkbox" class="checkbox" id="checkbox"></td>
+			<td class="td"><input type="checkbox" class="checkbox" ></td>
 
 		</tr>`
 		document.querySelector(".body-table").insertAdjacentHTML('beforeend', row);
 	});
-	console.log("se renderiza la data");
 }
 
 
@@ -112,7 +110,8 @@ const table = document.querySelector("#table");
 
 	table.addEventListener('click', (e)=>{
 		const action = e.target;
-	  	const taskName = action.parentElement.parentElement.firstElementChild.textContent;
+		let taskName = "";
+	  	taskName = action.parentElement.parentElement.firstElementChild.textContent;
   		localStorage.removeItem(taskName);
   		console.log(taskName);
   		deteleBtn.addEventListener('click', ()=>{
@@ -124,17 +123,15 @@ const table = document.querySelector("#table");
 
 
 function deleteTask(taskName){
-	const tasks = JSON.parse(localStorage.getItem('tasks'));
+	let tasks = JSON.parse(localStorage.getItem('tasks'));
 	console.log(tasks);
 	console.log("este es el taskName " + taskName );
-	tasks.forEach(task =>{
-		//console.log(task.description);
-		if (task.description === taskName) {
-			console.log("esto es lo de adentro del forEach " + taskName);
-		}else{
+	tasks = tasks.filter(task => task.description !== taskName);
+		console.log(tasks);
+	localStorage.clear();
+		tasks.forEach(task => {
 			saveData(task);
-		}
-	});
+		});
 	renderData();
 	//console.log("programa terminado");
 }
