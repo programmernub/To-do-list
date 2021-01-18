@@ -103,6 +103,7 @@ function renderData(){
 		</tr>`
 		document.querySelector(".body-table").insertAdjacentHTML('beforeend', row);
 	});
+	console.log("se renderiza la data");
 }
 
 
@@ -114,20 +115,28 @@ const table = document.querySelector("#table");
 	  	const taskName = action.parentElement.parentElement.firstElementChild.textContent;
   		localStorage.removeItem(taskName);
   		console.log(taskName);
-  		//deleteTask(taskName);
+  		deteleBtn.addEventListener('click', ()=>{
+			deleteTask(taskName);
+		});
 	});
-deteleBtn.addEventListener('click', ()=>{
-	deleteTask();
-});
+
+
+
+
 function deleteTask(taskName){
 	const tasks = JSON.parse(localStorage.getItem('tasks'));
+	console.log(tasks);
+	console.log("este es el taskName " + taskName );
 	tasks.forEach(task =>{
-		console.log(task.description);
+		//console.log(task.description);
 		if (task.description === taskName) {
-			localStorage.removeItem(taskName);
+			console.log("esto es lo de adentro del forEach " + taskName);
+		}else{
+			saveData(task);
 		}
 	});
-	console.log("programa terminado");
+	renderData();
+	//console.log("programa terminado");
 }
 	
 
