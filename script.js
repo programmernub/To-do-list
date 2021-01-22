@@ -3,6 +3,10 @@ const modal = document.querySelector(".modal-fill-data");
 const btnAdd = document.querySelector(".submit");
 const form = document.querySelector(".modal-fill-data");
 const deteleBtn = document.querySelector(".delete-task");
+const editStatus = document.querySelector(".edit-status");
+
+
+
 if (localStorage.getItem('tasks') !== null) {
 	renderData();
 }
@@ -112,10 +116,13 @@ const table = document.querySelector("#table");
 		const action = e.target;
 		let taskName = "";
 	  	taskName = action.parentElement.parentElement.firstElementChild.textContent;
-  		localStorage.removeItem(taskName);
+  		//localStorage.removeItem(taskName);
   		console.log(taskName);
   		deteleBtn.addEventListener('click', ()=>{
 			deleteTask(taskName);
+		});
+		editStatus.addEventListener('click', ()=>{
+			changeStatus(taskName);
 		});
 	});
 
@@ -132,8 +139,38 @@ function deleteTask(taskName){
 		tasks.forEach(task => {
 			saveData(task);
 		});
-	renderData();
+	if (localStorage.getItem('tasks') !== null) {
+		renderData();
+	}else{
+		const tableBody = document.querySelector(".body-table");
+		tableBody.innerHTML = "";
+	}
+	
 	//console.log("programa terminado");
 }
 	
 
+function changeStatus(taskName){
+	const tasks = JSON.parse(localStorage.getItem('tasks'));
+	let task = tasks.filter(task => task.description === taskName);
+	console.log(task[0].status);
+	document.querySelector(".modal-to-change-status").classList.remove("hidden");
+	const newStatus = document.querySelector("#change-status");
+	newStatus.addEventListener('change', ()=>{
+		task[0].status = document.querySelector("#change-status").value;
+		//Tengo que hacer un push a tasks y meterle la task que saqué
+		//tasks.push(task[0]);
+		localStorage.clear();
+		tasks.forEach(task => {
+			saveData(task);
+		});
+		if (localStorage.getItem('tasks') !== null) {
+		renderData();
+		}else{
+			const tableBody = document.querySelector(".body-table");
+			tableBody.innerHTML = "";
+		}
+		document.querySelector(".modal-to-change-status").classList.add("hidden");
+	});
+
+}

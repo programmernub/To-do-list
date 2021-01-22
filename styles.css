@@ -42,3 +42,15 @@
 	margin: 5px auto;
 	color:lightblue;
 }
+.hight{
+	color:red;
+	text-decoration: underline;
+}
+.normal{
+	color:yellow;
+	text-decoration: underline;
+}
+.low{
+	color:green;
+	text-decoration: underline;
+}
