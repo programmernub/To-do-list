@@ -2,21 +2,42 @@
 <html lang="es">
 <head>
 	<meta charset="utf-8">
-	<title>Practica para creación de elementos</title>
+	<title>To Do list</title>
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 	<header>
 		<h1 class="main-tittle">TO DO LIST</h1>
+		<label for="search-input" style="cursor: pointer;">
+			Search
+			<input type="search" name="search" id="search-input" placeholder="Search">
+			<p>By Priority
+				<select class="sort-tasks" id="sort-tasks">
+					<option value="name">Name</option>
+					<option value="priority">Priority</option>
+					<option></option>
+				</select>
+			</p>
+			<button id="search-button" class="search-button" style="cursor: pointer; outline: none;">Search</button>
+		</label>
 	</header>
 	<main>
-		<h2 class="subtittle">Lista de cosas por hacer</h2>
+		<h2 class="subtittle">Tasks</h2>
 		<div class="container" id="container">
 			<div class="buttons">
 				<button id="btn-add" class="btn-add">New</button>
-				<button id="delete-task" class="delete-task">Delete</button>
-		        <button id="edit-status" class="edit-status">Edit status</button>
+				<button id="delete-task" class="delete-task" disabled>Delete</button>
+		        <button id="edit-status" class="edit-status" disabled>Edit status</button>
 		    </div>
+		    <div id="modal-to-change-status" class="modal-to-change-status hidden">
+				<p>Choose a new status   
+					<select class="priority" id="change-status">
+						<option value="New">New</option>
+						<option value="In progress">In progress</option>
+						<option value="Done">Done</option>
+					</select>
+				</p>
+			</div>
 			<table class="table" id="table">
 		        <thead>
 		          <tr>
@@ -33,7 +54,7 @@
 
 
 		<form class="modal-fill-data hidden" id="modal-fill-data">
-			<h2>Agregar una nueva tarea</h2>
+			<h2>Add a new task</h2>
 			<input type="text" id="input-description" class="input-description" name="description" placeholder="Tarea a realizar">
 			<p>Priority   
 				<select class="priority" id="priority">
@@ -52,16 +73,7 @@
 			</p>
 			<input type="submit" id="submit" class="submit">
 		</form>
-		<div id="modal-to-change-status" class="modal-to-change-status hidden">
-			<p>Choose a new status   
-				<select class="priority" id="change-status">
-					<option value="New">New</option>
-					<option value="In progress">In progress</option>
-					<option value="Done">Done</option>
-				</select>
-			</p>
-		</div>
-
+		
 		
 	</main>
 	<footer></footer>

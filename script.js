@@ -118,6 +118,14 @@ const table = document.querySelector("#table");
 	  	taskName = action.parentElement.parentElement.firstElementChild.textContent;
   		//localStorage.removeItem(taskName);
   		console.log(taskName);
+
+  		if (deteleBtn.disabled == false) {
+  			deteleBtn.disabled = true;
+  			editStatus.disabled = true;
+  		}else{
+  			deteleBtn.disabled = false;
+  			editStatus.disabled = false;
+  		}
   		deteleBtn.addEventListener('click', ()=>{
 			deleteTask(taskName);
 		});
@@ -145,7 +153,9 @@ function deleteTask(taskName){
 		const tableBody = document.querySelector(".body-table");
 		tableBody.innerHTML = "";
 	}
-	
+	taskName = "";
+	document.querySelector(".delete-task").disabled = true;
+  	document.querySelector(".edit-status").disabled = true;
 	//console.log("programa terminado");
 }
 	
@@ -153,7 +163,6 @@ function deleteTask(taskName){
 function changeStatus(taskName){
 	const tasks = JSON.parse(localStorage.getItem('tasks'));
 	let task = tasks.filter(task => task.description === taskName);
-	console.log(task[0].status);
 	document.querySelector(".modal-to-change-status").classList.remove("hidden");
 	const newStatus = document.querySelector("#change-status");
 	newStatus.addEventListener('change', ()=>{
@@ -172,5 +181,18 @@ function changeStatus(taskName){
 		}
 		document.querySelector(".modal-to-change-status").classList.add("hidden");
 	});
+	taskName = "";
+	document.querySelector(".delete-task").disabled = true;
+  	document.querySelector(".edit-status").disabled = true;
+}
 
+const searchBtn = document.querySelector("#search-button");
+searchBtn.addEventListener('click', ()=>{
+	const tasks = JSON.parse(localStorage.getItem('tasks'));
+	let nameTask = document.querySelector("#search-input").value.toLowerCase();
+	searchTask(tasks,nameTask);
+});
+function searchTask(tasks,nameTask){
+	let task = tasks.filter(task => task.description.toLowerCase().includes(nameTask));
+	console.log(task);
 }
